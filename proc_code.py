@@ -49,7 +49,7 @@ def proc_main():
     label_train = label[0:int(0.75*n)]
     sample_test = sample[int(0.75*n):,:]
     label_test = label[int(0.75*n):]
-
+    # We are going to implement PCA here. Eventually.
     '''
     bigsig = np.cov(sample_train)
     lam,w = np.linalg.eig(bigsig)
@@ -57,6 +57,6 @@ def proc_main():
     lsort = np.argsort(-lam)
     eigarr = np.zeros((10,p))
     '''
-    
+
 if __name__=='__main__':
     proc_main()
