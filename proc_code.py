@@ -111,7 +111,7 @@ def proc_main(k,m,class_type='dt'):
     datacols2 = np.array(['LGD_PRM0','LGD_PRM1','LGD_PRM2','LGD_PRM3',
                         'SNR_MEAN','SNR_MAX','SNR_MIN','UMG','GMR',
                         'RMI','IMZ'])
-
+    print(len(datacols1),len(datacols0),len(datacols2))
     # Load the data from the fits file. It needs to be loaded into a simple
     # numpy array, however, so this block will do that based on which columns
     # are to be kept. We sample1 refers to the first set of data columns, sample0
