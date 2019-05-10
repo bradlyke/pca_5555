@@ -8,6 +8,7 @@ import matplotlib.ticker as ticker
 matplotlib.rc('text',usetex=True)
 matplotlib.rc('font',size=15)
 
+# This is for making the pretty plots I will use in the paper and presentation.
 def plotter(ycol,pca):
     datadt = fits.open('../data/dt_results_20190501T122018.fits')[1].data
     datarf = fits.open('../data/rf_results_20190501T122018.fits')[1].data
@@ -18,6 +19,7 @@ def plotter(ycol,pca):
     else:
         num_cols = 3
 
+    # We need to plot the error for each of the feature sets.
     for i in range(num_cols):
         ax[0].plot(datadt['NUM_DEPTH'],datadt[ycol][:,i],label='Set {}'.format(label_arr[i]))
         ax[1].plot(datarf['NUM_MODELS'],datarf[ycol][:,i],label='Set {}'.format(label_arr[i]))
@@ -30,6 +32,7 @@ def plotter(ycol,pca):
     plt.tight_layout()
     plt.show()
 
+# And we need to plot completeness and contamination.
 def plot2():
     datarf = fits.open('../data/rf_results_20190501T122018.fits')[1].data
     fig2,ax2 = plt.subplots(nrows=1,ncols=2,figsize=(10,4.5))
@@ -42,6 +45,7 @@ def plot2():
     plt.tight_layout()
     plt.show()
 
+# And for the best model, here are the plots.
 def plot3():
     datarf = fits.open('../data/rf_results_20190501T122018.fits')[1].data
     fig,ax = plt.subplots(figsize=(5,4.5))

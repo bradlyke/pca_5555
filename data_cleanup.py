@@ -58,8 +58,10 @@ def dclean(infile,seq_file):
     print(len(colnames_out))
     print(len(colforms_out))
 
+    #These are the columns from the original file we want to copy straight over.
     cols_to_copy = np.array(['PLATE','MJD','FIBERID','RA','DEC','OBJTYPE','Z','Z_ERR',
                             'SN_MEDIAN_ALL','OBJC_TYPE','OBJC_PROB_PSF'])
+    #These columns store arrays of values we want to break into separate columns.
     arr_to_break = np.array(['SN_MEDIAN','SPECTROFLUX','SPECTROFLUX_IVAR','SPECTROSYNFLUX',
                             'SPECTROSYNFLUX_IVAR','EXTINCTION','PSFFLUX','PSFFLUX_IVAR',
                             'PSFMAG','PSFMAGERR','FIBERFLUX','FIBERFLUX_IVAR',
@@ -80,15 +82,17 @@ def dclean(infile,seq_file):
             out_col = cname + '_{}'.format(color_arr[i])
             data_out[out_col] = tdata[cname][:,i]
 
-
+    #We don't want all 21 values for FRACNSIGMA, just the 3 sigma values.
     data_out['FRACNSIGMA_3'] = tdata['FRACNSIGMA'][:,2]
     data_out['FRACNSIGHI_3'] = tdata['FRACNSIGHI'][:,2]
     data_out['FRACNSIGLO_3'] = tdata['FRACNSIGLO'][:,2]
+    #We need the mag differences for the colors.
     data_out['UMG'] = (data_out['PSFMAG_U'] - data_out['EXTINCTION_U']) - (data_out['PSFMAG_G'] - data_out['EXTINCTION_G'])
     data_out['GMR'] = (data_out['PSFMAG_G'] - data_out['EXTINCTION_G']) - (data_out['PSFMAG_R'] - data_out['EXTINCTION_R'])
     data_out['RMI'] = (data_out['PSFMAG_R'] - data_out['EXTINCTION_R']) - (data_out['PSFMAG_I'] - data_out['EXTINCTION_I'])
     data_out['IMZ'] = (data_out['PSFMAG_I'] - data_out['EXTINCTION_I']) - (data_out['PSFMAG_Z'] - data_out['EXTINCTION_Z'])
 
+    #And we need to write out the file.
     dout_hash,seq_hash = ct.mk_hash(data_out),ct.mk_hash(sdata)
     dout_args,seq_args = ct.rec_match_srt(dout_hash,seq_hash)
     data_out['CLASS_PERSON'][dout_args] = sdata['CLASS_PERSON'][seq_args]
